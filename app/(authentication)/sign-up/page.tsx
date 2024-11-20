@@ -2,7 +2,7 @@
 import { IUser } from "@/app/_types/IUser"
 import { ChangeEvent, FormEvent, useState } from "react"
 
-export default function SignIn() {
+export default function SignUp() {
   const [user, setUser] = useState<IUser>({ username: "", password: "" })
   const [error, setError] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
@@ -23,7 +23,7 @@ export default function SignIn() {
     setLoading(true)
     setError("")
 
-    fetch("http://localhost:8080/login", {
+    fetch("http://localhost:8080/user/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
@@ -31,7 +31,7 @@ export default function SignIn() {
       .then((response) => {
         setLoading(false)
         if (response.ok) {
-          console.log("Login successful")
+          console.log("Sign up successful")
         } else {
           setError("Invalid username or password.")
         }
@@ -44,7 +44,7 @@ export default function SignIn() {
 
   return (
     <div className="p-4">
-      <header>Sign In</header>
+      <header>Sign up</header>
       <form onSubmit={onSubmit}>
         {/* Username */}
         <div>
@@ -75,7 +75,7 @@ export default function SignIn() {
         {error && <p className="text-red-500">{error}</p>}
 
         <button type="submit" disabled={loading}>
-          {loading ? "Signing in..." : "Sign In"}
+          {loading ? "Signing up..." : "Sign up"}
         </button>
       </form>
     </div>
