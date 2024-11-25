@@ -74,41 +74,67 @@ export default function SignIn() {
   }
 
   return (
-    <div className="p-4">
-      <header>Sign In</header>
-      <form onSubmit={onSubmit}>
-        {/* Username */}
-        <div>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            name="username"
-            value={user.username}
-            onChange={handleUserChange}
-            placeholder="Enter your username"
-            required
-          />
-        </div>
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <header className="text-2xl font-bold text-gray-800 text-center mb-6">
+          Sign In
+        </header>
+        <form onSubmit={onSubmit} className="space-y-4">
+          {/* Username */}
+          <div>
+            <label
+              htmlFor="username"
+              className="block text-sm font-medium text-gray-600 mb-1"
+            >
+              Username
+            </label>
+            <input
+              type="text"
+              name="username"
+              value={user.username}
+              onChange={handleUserChange}
+              placeholder="Enter your username"
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
 
-        {/* Password */}
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={user.password}
-            onChange={handleUserChange}
-            placeholder="Enter your password"
-            required
-          />
-        </div>
+          {/* Password */}
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-600 mb-1"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              value={user.password}
+              onChange={handleUserChange}
+              placeholder="Enter your password"
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
 
-        {error && <p className="text-red-500">{error}</p>}
+          {error && (
+            <p className="text-red-500 text-sm text-center mt-2">{error}</p>
+          )}
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Signing in..." : "Sign In"}
-        </button>
-      </form>
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full px-4 py-2 text-white rounded-lg shadow-md transition duration-300 ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-purple-500 hover:bg-purple-700"
+            }`}
+          >
+            {loading ? "Signing in..." : "Sign In"}
+          </button>
+        </form>
+      </div>
     </div>
   )
 }
