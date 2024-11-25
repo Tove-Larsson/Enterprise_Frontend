@@ -61,7 +61,7 @@ export default function SignIn() {
           setError("No token exist")
           return
         }
-        sessionStorage.setItem(token, "jwtToken")
+        sessionStorage.setItem("jwtToken", token)
       })
       .catch((error) => {
         if(error.name === "AbortError") {
