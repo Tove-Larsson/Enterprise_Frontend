@@ -1,5 +1,6 @@
 "use client"
 import { IUser } from "@/app/_types/IUser"
+import { time } from "console"
 import { ChangeEvent, FormEvent, useState } from "react"
 
 export default function SignIn() {
@@ -23,22 +24,52 @@ export default function SignIn() {
     setLoading(true)
     setError("")
 
-    fetch("http://localhost:8080/login", {
+    const timeout: number = 10_000
+    const controller = new AbortController()
+    const signal = controller.signal
+
+    const timeoutId = setTimeout(() => {
+      controller.abort()
+    }, timeout)
+
+    fetch("http://localhost:8080/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
     })
       .then((response) => {
+        clearTimeout(timeoutId)
+
         setLoading(false)
+
         if (response.ok) {
           console.log("Login successful")
+          return response.json()
+
         } else {
-          setError("Invalid username or password.")
+
+          return response.json()
+          .then((errorData) => {
+            setError("Invalid username or password.")
+            throw new Error(errorData.message || error)
+          })
         }
       })
-      .catch(() => {
+      .then((data) => {
+        const { token } = data
+        if(!token) {
+          setError("No token exist")
+          return
+        }
+        sessionStorage.setItem(token, "jwtToken")
+      })
+      .catch((error) => {
+        if(error.name === "AbortError") {
+          setError("Request timed out, please try again")
+        } else {
+          setError(error.message || "An error occured please try again")
+        }
         setLoading(false)
-        setError("An error occurred. Please try again.")
       })
   }
 
