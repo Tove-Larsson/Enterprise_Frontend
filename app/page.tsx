@@ -85,7 +85,7 @@ export default function Home() {
             <p className="text-gray-600">
               <span className="font-semibold text-gray-800">Username:</span> {user?.username}
             </p>
-            <p className="text-gray-600 mt-2">
+            <p className="text-gray-600 mt-2 break-words">
               <span className="font-semibold text-gray-800">Password:</span> {user?.password}
             </p>
           </div>

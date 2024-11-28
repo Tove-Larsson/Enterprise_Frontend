@@ -2,11 +2,14 @@
 import { IUser } from "@/app/_types/IUser"
 import { time } from "console"
 import { ChangeEvent, FormEvent, useState } from "react"
+import { IAuthResponse } from "@/app/_types/IAuthResponse"
+import { useRouter } from "next/navigation"
 
 export default function SignIn() {
   const [user, setUser] = useState<IUser>({ username: "", password: "" })
   const [error, setError] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
+  const router = useRouter()
 
   function handleUserChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
@@ -55,13 +58,21 @@ export default function SignIn() {
           })
         }
       })
-      .then((data) => {
-        const { token } = data
+      .then((data: IAuthResponse) => {
+        const token = data.token
+        const role = data.role
+
         if(!token) {
           setError("No token exist")
           return
         }
         sessionStorage.setItem("jwtToken", token)
+        sessionStorage.setItem("role", role)
+
+        if(role.match("USER")) router.push("/")
+        
+
+        if(role.match("ADMIN")) router.push("/admin")
       })
       .catch((error) => {
         if(error.name === "AbortError") {

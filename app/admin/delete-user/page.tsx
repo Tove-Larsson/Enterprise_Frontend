@@ -5,30 +5,35 @@ import { useRouter } from "next/router";
 
 export default function DeleteUser() {
   const router = useRouter();
-  const { username } = router.query; // Extract the username from the URL
-  const [error, setError] = useState(""); // State to handle errors
-  const [loading, setLoading] = useState(true); // State to show loading
+  const { username } = router.query; 
+  const [error, setError] = useState(""); 
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
+    const token = sessionStorage.getItem("jwtToken");
+    if (!token) {
+      setError("You are not authorized to access this page.");
+      router.push("/sign-in"); 
+      return;
+    }
+
     if (username) {
-      // Start the deletion process when the username is available
+      setLoading(true);
       fetch(`http://localhost:8080/admin/delete-user?username=${username}`, {
-        method: "DELETE", // Use DELETE HTTP method
+        method: "DELETE", 
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
       })
         .then((response) => {
           if (response.ok) {
-            // If deletion is successful, redirect to the admin homepage
             router.push("/admin");
           } else {
-            // Handle error response
             setError("Failed to delete user. Please try again.");
           }
         })
         .catch((error) => {
-          // Handle network errors
           setError("An error occurred while deleting the user.");
         })
         .finally(() => {

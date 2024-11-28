@@ -7,11 +7,13 @@ import { IUser } from "@/app/_types/IUser";
 export default function Admin() {
   const [user, setUser] = useState<IUser | null>(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
     const token = sessionStorage.getItem("jwtToken");
     if (!token) {
+      setLoading(false)
       setError("You are not authorized to access this page.");
       router.push("/sign-in"); 
       return;
@@ -27,6 +29,12 @@ export default function Admin() {
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched data:", data); 
+
+        if (data.role !== "ADMIN") { 
+            setError("You are not authorized to access this page.");
+            return;
+        }
+
         setUser(data); 
       })
       .catch((error) => {
