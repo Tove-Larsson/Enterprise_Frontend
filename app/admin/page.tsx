@@ -12,7 +12,7 @@ export default function Admin() {
   };
 
   const redirectCreate = () => {
-    router.push(`/admin/create-user`);
+    router.push(`/admin/create-admin`);
   };
 
   return (

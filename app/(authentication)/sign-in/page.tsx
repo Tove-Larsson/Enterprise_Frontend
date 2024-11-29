@@ -68,7 +68,7 @@ export default function SignIn() {
         sessionStorage.setItem("jwtToken", token)
         sessionStorage.setItem("role", role)
 
-        if(role.match("USER")) router.push("/")
+        if(role.match("USER")) router.push("/user")
         
 
         if(role.match("ADMIN")) router.push("/admin")
