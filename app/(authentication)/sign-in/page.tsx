@@ -1,6 +1,5 @@
 "use client"
 import { IUser } from "@/app/_types/IUser"
-import { time } from "console"
 import { ChangeEvent, FormEvent, useState } from "react"
 import { IAuthResponse } from "@/app/_types/IAuthResponse"
 import { useRouter } from "next/navigation"
@@ -54,7 +53,7 @@ export default function SignIn() {
           return response.json()
           .then((errorData) => {
             setError("Invalid username or password.")
-            throw new Error(errorData.message || error)
+            throw new Error(errorData.message)
           })
         }
       })

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { IUser } from "./_types/IUser";
+import LogoutButton from "./_components/LogoutButton";
 
 export default function Home() {
   const [user, setUser] = useState<IUser | null>(null);
@@ -90,6 +91,9 @@ export default function Home() {
             </p>
           </div>
         )}
+        <div className="mt-8">
+            <LogoutButton />
+          </div>
       </div>
     </div>
   );

@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 
 export default function DeleteUser() {
   const router = useRouter();
-  const [username, setUsername] = useState(""); // Controlled input state
-  const [error, setError] = useState(""); // To display errors
-  const [success, setSuccess] = useState(false); // To display success message
-  const [loading, setLoading] = useState(false); // To manage button loading state
+  const [username, setUsername] = useState("");
+  const [error, setError] = useState(""); 
+  const [success, setSuccess] = useState(false); 
+  const [loading, setLoading] = useState(false); 
 
   useEffect(() => {
     const token = sessionStorage.getItem("jwtToken");
@@ -16,7 +16,7 @@ export default function DeleteUser() {
       setError("You are not authorized to access this page.");
       setTimeout(() => {
         router.push("/sign-in");
-      }, 3000); // Redirect after showing the error
+      }, 3000); 
     }
   }, [router]);
 
@@ -27,9 +27,9 @@ export default function DeleteUser() {
       return;
     }
 
-    setError(""); // Clear previous errors
-    setLoading(true); // Show loading state
-    setSuccess(false); // Clear success state
+    setError(""); 
+    setLoading(true); 
+    setSuccess(false);
 
     try {
       const response = await fetch(
@@ -45,10 +45,10 @@ export default function DeleteUser() {
 
       if (response.ok) {
         setSuccess(true);
-        setUsername(""); // Clear username input
+        setUsername(""); 
         setTimeout(() => {
-          router.push("/admin"); // Redirect back to Admin page
-        }, 2000); // Allow user to see success message before redirect
+          router.push("/admin"); 
+        }, 2000);
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Failed to delete user. Please try again.");
