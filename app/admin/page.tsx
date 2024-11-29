@@ -11,6 +11,10 @@ export default function Admin() {
     router.push(`/admin/delete-user`);
   };
 
+  const redirectCreate = () => {
+    router.push(`/admin/create-user`);
+  };
+
   return (
     <>
       {role?.match("ADMIN") ? (
@@ -29,13 +33,16 @@ export default function Admin() {
             >
               Delete User
             </button>
-            <button className="w-full px-4 py-2 bg-purple-600 text-white rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 transition duration-300">
+            <button
+              onClick={redirectCreate}
+              className="w-full px-4 py-2 bg-purple-600 text-white rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 transition duration-300"
+            >
               Create Admin User
             </button>
           </div>
           <div className="mt-8">
-              <LogoutButton />
-            </div>
+            <LogoutButton />
+          </div>
         </div>
       ) : (
         <p className="min-h-screen flex flex-col items-center justify-center font-bold">
