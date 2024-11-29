@@ -2,8 +2,9 @@
 import { useEffect, useState } from "react";
 import { IUser } from "../_types/IUser";
 import LogoutButton from "../_components/LogoutButton";
+import DeleteSelfButton from "../_components/DeleteSelfButton";
 
-export default function Home() {
+export default function User() {
   const [user, setUser] = useState<IUser | null>(null);
   const [error, setError] = useState<string | null>(""); 
   const [loading, setLoading] = useState<boolean>(true)
@@ -61,6 +62,7 @@ export default function Home() {
   }, []);
 
   if (loading) {
+
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="text-center">
@@ -93,6 +95,10 @@ export default function Home() {
         )}
         <div className="mt-8">
             <LogoutButton />
+          </div>
+
+          <div className="mt-8">
+            <DeleteSelfButton />
           </div>
       </div>
     </div>
