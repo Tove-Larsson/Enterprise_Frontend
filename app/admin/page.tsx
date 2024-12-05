@@ -2,10 +2,17 @@
 
 import { useRouter } from "next/navigation";
 import LogoutButton from "@/app/_components/LogoutButton";
+import { useEffect, useState } from "react";
 
 export default function Admin() {
   const router = useRouter();
-  const role = sessionStorage.getItem("role");
+  const [role, setRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedRole = sessionStorage.getItem("role");
+    setRole(storedRole);
+  }, []); 
+
 
   const redirectDelete = () => {
     router.push(`/admin/delete-user`);

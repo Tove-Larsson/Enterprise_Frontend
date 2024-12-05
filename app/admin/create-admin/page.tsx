@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IUser } from "@/app/_types/IUser";
 
-export default function DeleteUser() {
+export default function CreateADmin() {
   const router = useRouter();
   const [user, setUser] = useState<IUser>({ username: "", password: "" })
   const [error, setError] = useState(""); 
